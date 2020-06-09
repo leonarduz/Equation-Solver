@@ -13,7 +13,7 @@ def solve(equation, symbol, min, max, accuracy):
             if eval(equation[0].replace(symbol, str(max))) - eval(equation[1].replace(symbol, str(max))) < 0:
                 min, max = max, min
         
-        #Checking is a salvation between min and max. if it is not, then function returns "salvation-out-of-range" string.
+        # Checking is a salvation between min and max. if it is not, then function returns "salvation-out-of-range" string.
 
         if eval(equation[0].replace(symbol, str(min))) - eval(equation[1].replace(symbol, str(min))) < 0:
             if eval(equation[0].replace(symbol, str(max))) - eval(equation[1].replace(symbol, str(max))) < 0:
