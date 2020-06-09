@@ -1,0 +1,58 @@
+def solve(equation, symbol, min, max, accuracy):
+    try:
+        guess = min
+        difference = 1
+
+        # spliting equation to 2 sides
+
+        equation = equation.split('=')
+        
+        # Checking is the equation descending. If it is, then replace min with max, and max with min.
+        
+        if eval(equation[0].replace(symbol, str(min))) - eval(equation[1].replace(symbol, str(min))) > 0:
+            if eval(equation[0].replace(symbol, str(max))) - eval(equation[1].replace(symbol, str(max))) < 0:
+                min, max = max, min
+        
+        #Checking is a salvation between min and max. if it is not, then function returns "salvation-out-of-range" string.
+
+        if eval(equation[0].replace(symbol, str(min))) - eval(equation[1].replace(symbol, str(min))) < 0:
+            if eval(equation[0].replace(symbol, str(max))) - eval(equation[1].replace(symbol, str(max))) < 0:
+                return 'salvation-out-of-range'
+        if eval(equation[0].replace(symbol, str(min))) - eval(equation[1].replace(symbol, str(min))) > 0:
+            if eval(equation[0].replace(symbol, str(max))) - eval(equation[1].replace(symbol, str(max))) > 0:
+                return 'salvation-out-of-range'
+        
+        # Finding the salvation by counting the difference of both sides with x (symbol) replaced by guess.
+        # If difference > 0 we change our max to guess, min stays the same. If difference < 0 we change our guess to min.
+        # We are repeating it till difference is bigger than 0 (accuracy actually, which is almost zero). '''
+        
+        while abs(difference) > accuracy:
+
+            strona1 = equation[0].replace(symbol, str(guess))
+            strona2 = equation[1].replace(symbol, str(guess))
+            difference = eval(strona1) - eval(strona2)
+
+            if difference < 0:
+                min = guess
+                if abs(difference) > accuracy:
+                    guess = (max + min) / 2
+            if difference > 0:
+                max = guess
+                if abs(difference) > accuracy:
+                    guess = (min + max) / 2
+
+        return round(guess, 3)
+
+      # If something goes wrong, than it proabably means, that the equation is incorect, and we are not able to: 
+      # 1. split the equation (because there is no =)
+      # 2. evaluate it (because there are for ex. letters or special characters).
+      # if there is an error (because of those reasons) function returns 'incorrect-equation' string.
+ 
+    except:
+        return 'incorrect-equation'
+
+#Call the function
+
+print(solve('2*x=x+3', 'x', -1000000, 1000000, 0.000001))
+
+# Thanks for reading! and sorry about my english, I am not from US.
